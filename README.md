@@ -1,4 +1,4 @@
-faker
+Deploy Clicker
 =====
 
-A fake webapp to generate random application metrics with.
+Deploy as fast as you can
