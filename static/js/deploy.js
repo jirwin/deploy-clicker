@@ -1,4 +1,10 @@
 $(function() {
+  $(document).on('keypress', '#deploy', function(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      return;
+    }
+  });
   $(document).on('click', '#deploy', function(e) {
     var csrf = $('#csrf').val();
 
