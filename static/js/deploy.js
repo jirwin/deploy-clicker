@@ -41,6 +41,7 @@ $(function() {
         $('#user-count').text(numberWithCommas(userCount.userCount).toString());
         $('#deploy-speed').text(speedObj.speed.toFixed(2).toString());
         $('#deploy-count').text(numberWithCommas(data['deploy_count']).toString());
+        $('#total-users').text(numberWithCommas(userCount.totalCount).toString());
       }
     });
   });
