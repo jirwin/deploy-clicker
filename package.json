@@ -10,7 +10,8 @@
     "hiredis": "*",
     "redis": "*",
     "redis-bitmap": "*",
-    "async": "*"
+    "async": "*",
+    "socket.io": "*"
   },
   "scripts": {
     "start": "node bin/deploy-clicker.js"

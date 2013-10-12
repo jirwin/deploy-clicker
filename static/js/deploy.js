@@ -3,6 +3,35 @@ function numberWithCommas(x) {
 }
 
 $(function() {
+  var socket = io.connect('http://deploy.jirwin.net:3000'),
+      sessionKey = $('#sessionKey').val();
+
+  socket.on('update:global', function(data) {
+    $('#total-users').text(numberWithCommas(data.totalCount).toString());
+  });
+
+  socket.on('update:' + sessionKey, function (data) {
+    $('#user-count').text(numberWithCommas(data.userCount).toString());
+
+    if (data.magnitude < 0) {
+      data.magnitude *= -1;
+      $('#user-change').text(numberWithCommas(data.magnitude).toString());
+      $('#action').text('Lost');
+    } else {
+      $('#user-change').text(numberWithCommas(data.magnitude).toString());
+      $('#action').text('Gained');
+    }
+
+    if (data.success) {
+      $('#deploy').addClass('btn-success').removeClass('btn-danger');
+    } else {
+      $('#deploy').addClass('btn-danger').removeClass('btn-success');
+    }
+
+    $('#deploy-speed').text(data.deploySpeed.speed.toFixed(2).toString());
+    $('#deploy-count').text(numberWithCommas(data.deployCount).toString());
+  });
+
   $(document).on('keypress', '#deploy', function(e) {
     if (e.which === 13) {
       e.preventDefault();
@@ -17,32 +46,7 @@ $(function() {
       beforeSend: function(req) {
         req.setRequestHeader('X-XSRF-TOKEN', csrf);
       },
-      url: '/deploy',
-      success: function(data) {
-        var speedObj = data['deploy_speed'],
-            userCount = data['user_count'],
-            success = data['success'];
-
-        if (success) {
-          $('#deploy').addClass('btn-success').removeClass('btn-danger');
-        } else {
-          $('#deploy').addClass('btn-danger').removeClass('btn-success');
-        }
-
-        if (userCount.magnitude < 0) {
-          userCount.magnitude *= -1;
-          $('#user-change').text(numberWithCommas(userCount.magnitude).toString());
-          $('#action').text('Lost');
-        } else {
-          $('#user-change').text(numberWithCommas(userCount.magnitude).toString());
-          $('#action').text('Gained');
-        }
-
-        $('#user-count').text(numberWithCommas(userCount.userCount).toString());
-        $('#deploy-speed').text(speedObj.speed.toFixed(2).toString());
-        $('#deploy-count').text(numberWithCommas(data['deploy_count']).toString());
-        $('#total-users').text(numberWithCommas(userCount.totalCount).toString());
-      }
+      url: '/deploy'
     });
   });
 });
