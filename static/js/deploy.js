@@ -3,11 +3,16 @@ function numberWithCommas(x) {
 }
 
 $(function() {
-  var socket = io.connect('http://deploy.jirwin.net:3000'),
+  var socket = io.connect('http://deploy.jirwin.net'),
       sessionKey = $('#sessionKey').val();
 
   socket.on('update:global', function(data) {
     $('#total-users').text(numberWithCommas(data.totalCount).toString());
+  });
+
+  socket.on('activeUsers', function(data) {
+    $('#active-users').text(numberWithCommas(data.count).toString());
+    $('#active-devs-msg').show();
   });
 
   socket.on('update:' + sessionKey, function (data) {
