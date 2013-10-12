@@ -1,3 +1,7 @@
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 $(function() {
   $(document).on('keypress', '#deploy', function(e) {
     if (e.which === 13) {
@@ -25,10 +29,18 @@ $(function() {
           $('#deploy').addClass('btn-danger').removeClass('btn-success');
         }
 
-        $('#user-count').text(userCount.userCount.toString());
-        $('#deploy-speed').text(parseFloat(speedObj.speed).toFixed(2).toString());
-        $('#deploy-speed-message').show();
-        $('#deploy-count').text(data['deploy_count'].toString());
+        if (userCount.magnitude < 0) {
+          userCount.magnitude *= -1;
+          $('#user-change').text(numberWithCommas(userCount.magnitude).toString());
+          $('#action').text('Lost');
+        } else {
+          $('#user-change').text(numberWithCommas(userCount.magnitude).toString());
+          $('#action').text('Gained');
+        }
+
+        $('#user-count').text(numberWithCommas(userCount.userCount).toString());
+        $('#deploy-speed').text(speedObj.speed.toFixed(2).toString());
+        $('#deploy-count').text(numberWithCommas(data['deploy_count']).toString());
       }
     });
   });

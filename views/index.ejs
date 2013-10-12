@@ -1,25 +1,27 @@
 <% include header %>
 
 <div class="container">
-  <div class="row center" id="user-count-message">
-    <div class="col-md-12">
-      <h3>You have <span id="user-count"><%= userCount %></span> users</h3>
+  <div class="row center" id="deploy-count-message">
+    <div class="col-md-4">
+      <h3>
+        <span id="action">Gained</span> <span id="user-change">0</span> users
+      </h3>
+    </div>
+    <div class="col-md-4">
+      <h3>
+        <span id="deploy-speed">0</span> deploys per second
+      </h3>
+    </div>
+    <div class="col-md-4">
+      <h3>
+        <span id="user-count"><%= userCount %></span> users after <span id="deploy-count"><%= deployCount %></span> deploys
+      </h3>
     </div>
   </div>
   <div class="well row">
     <div class="col-md-12">
       <input type="hidden" value="<%= token %>" id="csrf">
       <button type="button" class="btn btn-primary btn-lg btn-block" id="deploy">Deploy</button>
-    </div>
-  </div>
-  <div class="row center" id="deploy-count-message">
-    <div class="col-md-12">
-      <h3>You've deployed <span id="deploy-count"><%= deployCount %></span> times</h3>
-    </div>
-  </div>
-  <div class="row center" style="display: none;" id="deploy-speed-message">
-    <div class="col-md-12">
-      <h3>You're deploy speed is <span id="deploy-speed"></span> deploys per second</h3>
     </div>
   </div>
 </div><!-- /.container -->
