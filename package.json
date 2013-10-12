@@ -9,6 +9,7 @@
     "ejs": "0.8.4",
     "hiredis": "*",
     "redis": "*",
+    "redis-bitmap": "*",
     "async": "*"
   },
   "scripts": {

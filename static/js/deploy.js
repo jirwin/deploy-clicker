@@ -15,7 +15,20 @@ $(function() {
       },
       url: '/deploy',
       success: function(data) {
-        $('#deploy-count').text(data.toString());
+        var speedObj = data['deploy_speed'],
+            userCount = data['user_count'],
+            success = data['success'];
+
+        if (success) {
+          $('#deploy').addClass('btn-success').removeClass('btn-danger');
+        } else {
+          $('#deploy').addClass('btn-danger').removeClass('btn-success');
+        }
+
+        $('#user-count').text(userCount.userCount.toString());
+        $('#deploy-speed').text(parseFloat(speedObj.speed).toFixed(2).toString());
+        $('#deploy-speed-message').show();
+        $('#deploy-count').text(data['deploy_count'].toString());
       }
     });
   });
